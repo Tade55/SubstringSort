@@ -1,0 +1,95 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args){
+        int noOfInputStrings=0;
+        String inputStrings;
+        int firstIndex;
+        int secondIndex;
+        int counterOne=0;
+        int counterTwo=0;
+        char track;
+        int indexOfHigherCharNumber=0;
+        int numberTwo=0;
+
+        //Here am using Map to map the characters to their number representations
+
+        Map<Character, Integer> map=new HashMap<>();
+        List<String> list=new ArrayList<>();
+        List<Integer> listOne;
+        List<List<Integer>> listTwo=new ArrayList<>();
+
+        Scanner scanner=new Scanner(System.in);
+        noOfInputStrings=scanner.nextInt();
+
+        //The following do/while is used to input the strings into a list of string
+        //and the integer bounds of the characters within the indexes to be interchanged in
+        //each string are also inputed into separate list of integers and consequently into
+        //a list of list of integers
+        do{
+            listOne=new ArrayList<>();
+            inputStrings=scanner.next();
+            secondIndex=scanner.nextInt();
+            firstIndex=scanner.nextInt();
+            listOne.add(secondIndex);
+            listOne.add(firstIndex);
+            listTwo.add(listOne);
+            list.add(inputStrings);
+            counterTwo++;
+        }while (counterTwo<noOfInputStrings);
+
+
+        map.put('a',1); map.put('b',2); map.put('c',3); map.put('d',4); map.put('e',5); map
+                .put('f',6); map.put('g',7); map.put('h',8); map.put('i',9); map.put('j',10);
+        map.put('k',11); map.put('l',12); map.put('m',13); map.put('n',14); map.put('o',15);
+        map.put('p',16); map.put('q',17); map.put('r',18); map.put('s',19); map.put('t',20);
+        map.put('u',21); map.put('v',22); map.put('w',23); map.put('x',24); map.put('y',25);
+        map.put('z',26);
+
+            int firstCharIndex=0;
+            int secondCharIndex=0;
+            int noCompareTwo=0;
+            int secondCount=0;
+            int thirdCount=0;
+            int indexOfHighestCharNumber=0;
+            //Here the strings inputed in the list will be handled one after the other 
+            //for character movements based on alphabets and number matching in descending order
+            for (var listVariant:list){
+                var listOfIndex=listTwo.get(counterOne);
+                firstCharIndex=listOfIndex.get(0);
+                secondCharIndex=listOfIndex.get(1);
+                int noOfIterations=secondCharIndex-firstCharIndex;
+                int keepTab=firstCharIndex;
+                var stringToCharArray=listVariant.toCharArray();
+                //Here character movements based on alphabets and number matching in descending 
+                //order occuring
+                do {
+                    secondCount=firstCharIndex;
+                    do{
+                        thirdCount=secondCount;
+                        secondCount=secondCount+1;
+                        if (map.get(stringToCharArray[thirdCount])>map.get(stringToCharArray
+                             [secondCount]))
+                            indexOfHigherCharNumber = thirdCount;
+                        else
+                            indexOfHigherCharNumber = secondCount;
+                        if (map.get(stringToCharArray[indexOfHigherCharNumber])>noCompareTwo){
+                            noCompareTwo = map.get(stringToCharArray[indexOfHigherCharNumber]);
+                            indexOfHighestCharNumber=indexOfHigherCharNumber;
+                        }
+                    }while (secondCount<secondCharIndex);
+                        track = stringToCharArray[firstCharIndex];
+                        stringToCharArray[firstCharIndex] = stringToCharArray                        [indexOfHighestCharNumber];
+                        stringToCharArray[indexOfHighestCharNumber] = track;
+                    firstCharIndex=firstCharIndex+1;
+                    keepTab++;
+                    noCompareTwo=0;
+                }while (keepTab<=noOfIterations);
+                System.out.println(Arrays.toString(stringToCharArray));
+                counterOne++;
+            }
+    }
+}
+
+
+
